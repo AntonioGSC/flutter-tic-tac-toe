@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tic_tac_toe/models/game.dart';
 import 'package:tic_tac_toe/utils/constants.dart';
 
 class GameWidget extends StatefulWidget {
@@ -10,6 +11,9 @@ class GameWidget extends StatefulWidget {
 }
 
 class _GameWidgetState extends State<GameWidget> {
+  Game? game;
+  bool suaVez = false;
+
   List<List<int>> cells = [
     [0, 0, 0],
     [0, 0, 0],
@@ -55,6 +59,21 @@ class _GameWidgetState extends State<GameWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    (game == null
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _buildButton("Criar", true),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              _buildButton("Entrar", false),
+                            ],
+                          )
+                        : Text(
+                            suaVez ? "Sua vez!" : "Aguarde sua vez",
+                            style: textStyle36,
+                          )),
                     GridView.count(
                       shrinkWrap: true,
                       mainAxisSpacing: 10,
@@ -76,6 +95,23 @@ class _GameWidgetState extends State<GameWidget> {
                 )),
               ))
         ]),
+      ),
+    );
+  }
+
+  Widget _buildButton(String label, bool isCreator) {
+    return SizedBox(
+      width: ScreenUtil().setWidth(300),
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(side: buttonBorder),
+        child: Padding(
+          padding: paddingDefault,
+          child: Text(
+            label,
+            style: textStyle36,
+          ),
+        ),
+        onPressed: () {},
       ),
     );
   }
